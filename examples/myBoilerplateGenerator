@@ -1,0 +1,124 @@
+#!/usr/bin/env node
+const CLI = require("@jkhong/cli-js");
+
+// import your code
+const ReactActions = { genBoilerPlate: function () { } };
+const ReactNativeActions = { genBoilerPlate: function () { } };
+const MeteorActions = { genBoilerPlate: function () { } };
+
+// use your code in methods to be plugged to the manual
+function ReactPlug(cliOptions) {
+    ReactActions.genBoilerPlate(
+        cliOptions.getSwitchValue("projectName"),
+        cliOptions.getSwitchValue("namespace"),
+        cliOptions.getSwitchValue("useRedux")
+    );
+}
+function ReactNativePlug(cliOptions) {
+    ReactNativeActions.genBoilerPlate(
+        cliOptions.getSwitchValue("projectName")
+    );
+}
+function MeteorPlug(cliOptions) {
+    MeteorActions.genBoilerPlate(
+        cliOptions.getSwitchValue("projectName"),
+        cliOptions.getSwitchValue("namespace"),
+        cliOptions.getSwitchValue("version")
+    );
+}
+
+// build the manual content
+const manualContent = {
+    appName: "Boiler plate generator",
+    binName: "myBoilerplateGenerator",
+    appSubTitle: " the best on the market place",
+    appVersion: `v.1.2.3`,
+    about: "some descriptive information about this script",
+    actionsGroups: [
+        {
+            name: "react actions",
+            desc: "some cli utils for react projects",
+            actions: [{
+                name: "generateReact",
+                desc: "generate a react boiler plate",
+                switches: [
+                    {
+                        name: "projectName",
+                        desc: "the name of the project"
+                    },
+                    {
+                        name: "namespace",
+                        desc: "the namespace of the project"
+                    },
+                    {  // optional switch due to the default value
+                        name: "useRedux",
+                        desc: "configure for redux",
+                        default: "false"
+                    }
+                ],
+                action: ReactPlug
+            }
+            ]
+        },
+        {
+            name: "react native actions",
+            desc: "some cli utils for react native projects",
+            actions: [{
+                name: "generateReactNative",
+                desc: "generate a react native boiler plate",
+                switches: [
+                    {
+                        name: "projectName",
+                        desc: "the name of the project"
+                    }
+                ],
+                action: ReactNativePlug
+            }
+            ]
+        },
+        {
+            name: "meteor actions",
+            desc: "some cli utils for meteor projects",
+            actions: [{
+                name: "generateMeteor",
+                desc: "generate a meteor boiler plate",
+                switches: [
+                    {
+                        name: "projectName",
+                        desc: "the name of the project"
+                    },
+                    {
+                        name: "namespace",
+                        desc: "the namespace of the project"
+                    },
+                    {  // optional switch due to the default value
+                        name: "version",
+                        desc: "meteor version to use",
+                        default: "1.5"
+                    }
+                ],
+                action: MeteorPlug
+            }
+            ]
+        }
+    ]
+};
+
+class CustomManual extends CLI.Manual {
+    // methods that can be overriden
+    // about(cliOptions) { }
+    // getSwitchPrefix() {}
+    // printHelp(cliOptions) {}
+    // displaySectionHeader(section) {}
+    // displayAction(action) {}
+}
+
+try {
+    const cli = new CLI.Interface();
+    // cli.setManualContent(manualContent);
+    cli.setManual(new CustomManual(manualContent));
+    cli.launch();
+}
+catch (e) {
+    console.log(e);
+}
