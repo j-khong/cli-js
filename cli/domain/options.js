@@ -17,7 +17,7 @@ class Options {
 
     getSwitchValue(switchName) {
         const value = this.cliOptions[switchName];
-        if (DevUtils.isBlank(value)) { return null; }
+        if (DevUtils.isEmpty(value)) { return null; }
 
         return value;
     }

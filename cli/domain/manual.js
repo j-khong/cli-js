@@ -6,7 +6,7 @@ const DevError = require('../errors/devError')
 const Switch = new SimpleSchema({
     name: String,
     desc: String,
-    default: { type: String, optional: true }
+    default: { type: Object, blackbox: true, optional: true }
 });
 const Action = new SimpleSchema({
     name: String,

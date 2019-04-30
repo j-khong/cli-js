@@ -110,7 +110,7 @@ const manualContent = {
                     {  // optional switch due to the default value
                         name: "useRedux",
                         desc: "configure for redux",
-                        default: "false"
+                        default: {value: false}
                     }
                 ],
                 action: ReactPlug
@@ -151,7 +151,7 @@ const manualContent = {
                     {  // optional switch due to the default value
                         name: "version",
                         desc: "meteor version to use",
-                        default: "1.5"
+                        default: {value: 1.5}
                     }
                 ],
                 action: MeteorPlug
@@ -201,4 +201,19 @@ try {
 catch (e) {
     console.log(e);
 }
+```
+
+## The cli
+
+You can customize the way cli displays error by inheriting methods
+
+```javascript
+class CustomCli extends CLI.Interface {
+// methods that can be overriden
+    displayHeader(header) {
+        // display hat you want here
+    }
+    manageException(e) {
+        // display hat you want here
+    }
 ```
