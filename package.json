@@ -22,7 +22,7 @@
   "dependencies": {
     "@jkhong/devutils": "^1.2.1",
     "colors": "^1.3.3",
-    "minimist": "^1.2.0",
+    "minimist": ">=1.2.3",
     "simpl-schema": "^1.5.5"
   }
 }
