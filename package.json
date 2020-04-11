@@ -1,28 +1,43 @@
 {
-  "name": "@jkhong/cli-js",
-  "version": "1.0.1",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "./node_modules/mocha/bin/mocha tests/tests.js"
-  },
-  "author": "Julien Khong <julienkhong@yahoo.fr>",
-  "license": "ISC",
-  "homepage": "https://github.com/j-khong/cli-js#readme",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/j-khong/cli-js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/j-khong/cli-js/issues"
-  },
-  "devDependencies": {
-    "mocha": "^5.1.0"
-  },
-  "dependencies": {
-    "@jkhong/devutils": "^1.2.1",
-    "colors": "^1.3.3",
-    "minimist": ">=1.2.3",
-    "simpl-schema": "^1.5.5"
-  }
+   "name": "@jkhong/cli-js",
+   "version": "1.0.1",
+   "description": "",
+   "main": "src/index.js",
+   "scripts": {
+      "test": "./node_modules/mocha/bin/mocha tests/tests.js",
+      "format": "prettier --write \"src/**/*.js\"",
+      "lint": "eslint src/**/*.js",
+      "prepublishOnly": "npm run lint && npm test",
+      "preversion": "npm run lint",
+      "version": "npm run format && git add -A src",
+      "postversion": "git push && git push --tags"
+   },
+   "husky": {
+      "hooks": {
+         "pre-commit": "npm run format && npm run lint",
+         "pre-push": "npm test"
+      }
+   },
+   "author": "Julien Khong <julienkhong@yahoo.fr>",
+   "license": "ISC",
+   "homepage": "https://github.com/j-khong/cli-js#readme",
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/j-khong/cli-js.git"
+   },
+   "bugs": {
+      "url": "https://github.com/j-khong/cli-js/issues"
+   },
+   "devDependencies": {
+      "eslint": "^6.8.0",
+      "husky": "^4.2.3",
+      "mocha": "^5.1.0",
+      "prettier": "^2.0.2"
+   },
+   "dependencies": {
+      "@jkhong/devutils": "^1.2.1",
+      "colors": "^1.3.3",
+      "minimist": ">=1.2.3",
+      "simpl-schema": "^1.5.5"
+   }
 }
