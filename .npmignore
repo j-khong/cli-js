@@ -1,0 +1,12 @@
+!types/
+
+README.md
+.eslintrc
+.prettierrc
+tsconfig.json
+
+examples/
+.vscode/
+node_modules/
+tests/
+

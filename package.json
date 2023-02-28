@@ -2,13 +2,13 @@
    "name": "@jkhong/cli-js",
    "version": "1.1.1",
    "description": "",
-   "main": "src/index.js",
+   "main": "./src/index.js",
    "types": "./types/index.d.ts",
    "scripts": {
       "test": "./node_modules/mocha/bin/mocha tests/tests.js",
       "format": "prettier --write \"src/**/*.js\"",
       "lint": "eslint src/**/*.js",
-      "prepublishOnly": "npm run lint && npm test && npx tsc",
+      "prepublishOnly": "npx tsc && npm run lint && npm test",
       "preversion": "npm run lint",
       "version": "npm run format && git add -A src",
       "postversion": "git push && git push --tags"
