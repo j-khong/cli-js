@@ -1,4 +1,4 @@
-const DevUtils = require('@jkhong/devutils');
+const DevUtils = require('@jkhong/devutils').DevUtils;
 const minimist = require('minimist');
 
 class Options {

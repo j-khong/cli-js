@@ -1,4 +1,4 @@
-const DevUtils = require('@jkhong/devutils');
+const DevUtils = require('@jkhong/devutils').DevUtils;
 const SimpleSchema = require('simpl-schema').default;
 const InputError = require('../errors/inputError');
 const DevError = require('../errors/devError');
@@ -149,7 +149,7 @@ class Manual {
       for (const aswitch of action.switches) {
          var str = `${switchPrefix}${aswitch.name}`;
          if (aswitch.default) {
-            str += ` (default: ${aswitch.default})`;
+            str += ` (default: ${aswitch.default.value})`;
          }
          console.error(`${str.padEnd(padding)} - ${aswitch.desc}`);
       }

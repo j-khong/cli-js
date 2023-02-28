@@ -1,4 +1,5 @@
-const DevUtils = require('@jkhong/devutils');
+const DevUtils = require('@jkhong/devutils').DevUtils;
+const FunctionUtils = require('@jkhong/devutils').FunctionUtils;
 require('colors');
 
 const Manual = require('./domain/manual');
@@ -85,7 +86,7 @@ class CLI {
    }
 
    async executeAction(action, options) {
-      if (DevUtils.Function.isAsync(action.action)) {
+      if (FunctionUtils.isAsync(action.action)) {
          await action.action(options);
       } else {
          action.action(options);
