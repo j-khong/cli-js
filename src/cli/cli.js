@@ -33,15 +33,7 @@ class CLI {
             );
          }
 
-         const header = [this.man.getAppName()];
-         if (DevUtils.isSet(this.man.getAppSubTitle())) {
-            header.push(this.man.getAppSubTitle());
-         }
-         if (DevUtils.isSet(this.man.getAppVersion())) {
-            header.push(this.man.getAppVersion());
-         }
-
-         this.displayHeader(header);
+         this.displayHeader();
 
          const options = Options.get();
          if (options.isEmpty()) {
@@ -104,7 +96,15 @@ class CLI {
       }
    }
 
-   displayHeader(header) {
+   displayHeader() {
+      const header = [this.man.getAppName()];
+      if (DevUtils.isSet(this.man.getAppSubTitle())) {
+         header.push(this.man.getAppSubTitle());
+      }
+      if (DevUtils.isSet(this.man.getAppVersion())) {
+         header.push(this.man.getAppVersion());
+      }
+
       console.log(this.logger.formatHeader(header).bold.cyan);
    }
 }

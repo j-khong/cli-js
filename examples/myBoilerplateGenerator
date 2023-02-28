@@ -1,124 +1,165 @@
 #!/usr/bin/env node
-const CLI = require("@jkhong/cli-js");
+const CLI = require('../src');
 
 // import your code
-const ReactActions = { genBoilerPlate: function () { } };
-const ReactNativeActions = { genBoilerPlate: function () { } };
-const MeteorActions = { genBoilerPlate: function () { } };
+const ReactActions = {
+   genBoilerPlate: function (projectName, namespace, useRedux) {
+      console.log(
+         `generating a React boiler plate for project ${projectName}, with namespace ${namespace}. Are we using redux : ${useRedux}`,
+      );
+   },
+   upgradeProject: function (projectPath) {
+      console.log(`upgrading a React project located in ${projectPath}`);
+   },
+};
+const ReactNativeActions = {
+   genBoilerPlate: function (projectName) {
+      console.log(`generating a React Native boiler plate for project ${projectName}`);
+   },
+};
+const MeteorActions = {
+   genBoilerPlate: function (projectName, namespace, version) {
+      console.log(
+         `generating a Meteor boiler plate for project ${projectName}, with namespace ${namespace} and version ${version}`,
+      );
+   },
+};
 
 // use your code in methods to be plugged to the manual
 function ReactPlug(cliOptions) {
-    ReactActions.genBoilerPlate(
-        cliOptions.getSwitchValue("projectName"),
-        cliOptions.getSwitchValue("namespace"),
-        cliOptions.getSwitchValue("useRedux")
-    );
+   ReactActions.genBoilerPlate(
+      cliOptions.getSwitchValue('projectName'),
+      cliOptions.getSwitchValue('namespace'),
+      cliOptions.getSwitchValue('useRedux'),
+   );
+}
+function ReactUpgradePlug(cliOptions) {
+   ReactActions.upgradeProject(cliOptions.getSwitchValue('projectPath'));
 }
 function ReactNativePlug(cliOptions) {
-    ReactNativeActions.genBoilerPlate(
-        cliOptions.getSwitchValue("projectName")
-    );
+   ReactNativeActions.genBoilerPlate(cliOptions.getSwitchValue('projectName'));
 }
 function MeteorPlug(cliOptions) {
-    MeteorActions.genBoilerPlate(
-        cliOptions.getSwitchValue("projectName"),
-        cliOptions.getSwitchValue("namespace"),
-        cliOptions.getSwitchValue("version")
-    );
+   MeteorActions.genBoilerPlate(
+      cliOptions.getSwitchValue('projectName'),
+      cliOptions.getSwitchValue('namespace'),
+      cliOptions.getSwitchValue('version'),
+   );
 }
 
 // build the manual content
 const manualContent = {
-    appName: "Boiler plate generator",
-    binName: "myBoilerplateGenerator",
-    appSubTitle: " the best on the market place",
-    appVersion: `v.1.2.3`,
-    about: "some descriptive information about this script",
-    actionsGroups: [
-        {
-            name: "react actions",
-            desc: "some cli utils for react projects",
-            actions: [{
-                name: "generateReact",
-                desc: "generate a react boiler plate",
-                switches: [
-                    {
-                        name: "projectName",
-                        desc: "the name of the project"
-                    },
-                    {
-                        name: "namespace",
-                        desc: "the namespace of the project"
-                    },
-                    {  // optional switch due to the default value
-                        name: "useRedux",
-                        desc: "configure for redux",
-                        default: "false"
-                    }
-                ],
-                action: ReactPlug
-            }
-            ]
-        },
-        {
-            name: "react native actions",
-            desc: "some cli utils for react native projects",
-            actions: [{
-                name: "generateReactNative",
-                desc: "generate a react native boiler plate",
-                switches: [
-                    {
-                        name: "projectName",
-                        desc: "the name of the project"
-                    }
-                ],
-                action: ReactNativePlug
-            }
-            ]
-        },
-        {
-            name: "meteor actions",
-            desc: "some cli utils for meteor projects",
-            actions: [{
-                name: "generateMeteor",
-                desc: "generate a meteor boiler plate",
-                switches: [
-                    {
-                        name: "projectName",
-                        desc: "the name of the project"
-                    },
-                    {
-                        name: "namespace",
-                        desc: "the namespace of the project"
-                    },
-                    {  // optional switch due to the default value
-                        name: "version",
-                        desc: "meteor version to use",
-                        default: "1.5"
-                    }
-                ],
-                action: MeteorPlug
-            }
-            ]
-        }
-    ]
+   appName: 'Boiler plate generator',
+   binName: 'myBoilerplateGenerator',
+   appSubTitle: ' the best on the market place',
+   appVersion: `v.1.2.3`,
+   about: 'some descriptive information about this script',
+   actionsGroups: [
+      {
+         name: 'react actions',
+         desc: 'some cli utils for react projects',
+         actions: [
+            {
+               name: 'generateReact',
+               desc: 'generate a react boiler plate',
+               switches: [
+                  {
+                     name: 'projectName',
+                     desc: 'the name of the project',
+                  },
+                  {
+                     name: 'namespace',
+                     desc: 'the namespace of the project',
+                  },
+                  {
+                     // optional switch due to the default value
+                     name: 'useRedux',
+                     desc: 'configure for redux',
+                     default: { value: false },
+                  },
+               ],
+               action: ReactPlug,
+            },
+            {
+               name: 'upgradeProject',
+               desc: 'upgrade a react project',
+               switches: [
+                  {
+                     name: 'projectPath',
+                     desc: 'the path to the project',
+                  },
+               ],
+               action: ReactUpgradePlug,
+            },
+         ],
+      },
+      {
+         name: 'react native actions',
+         desc: 'some cli utils for react native projects',
+         actions: [
+            {
+               name: 'generateReactNative',
+               desc: 'generate a react native boiler plate',
+               switches: [
+                  {
+                     name: 'projectName',
+                     desc: 'the name of the project',
+                  },
+               ],
+               action: ReactNativePlug,
+            },
+         ],
+      },
+      {
+         name: 'meteor actions',
+         desc: 'some cli utils for meteor projects',
+         actions: [
+            {
+               name: 'generateMeteor',
+               desc: 'generate a meteor boiler plate',
+               switches: [
+                  {
+                     name: 'projectName',
+                     desc: 'the name of the project',
+                  },
+                  {
+                     name: 'namespace',
+                     desc: 'the namespace of the project',
+                  },
+                  {
+                     // optional switch due to the default value
+                     name: 'version',
+                     desc: 'meteor version to use',
+                     default: { value: '1.5' },
+                  },
+               ],
+               action: MeteorPlug,
+            },
+         ],
+      },
+   ],
 };
 
 class CustomManual extends CLI.Manual {
-    // methods that can be overriden
-    // about(cliOptions) { }
-    // getSwitchPrefix() {}
-    // printHelp(cliOptions) {}
-    // displaySectionHeader(section) {}
-    // displayAction(action) {}
+   // methods that can be overriden
+   // about(cliOptions) { }
+   // getSwitchPrefix() {}
+   //    printHelp(cliOptions) {
+   //       console.log('nothing');
+   //    }
+   // displaySectionHeader(section) {}
+   // displayAction(action) {}
 }
 
 try {
-    const cli = new CLI.Interface();
-    // cli.setManualContent(manualContent);
-    cli.setManual(new CustomManual(manualContent));
-    cli.launch();
-}
-catch (e) {
-    console.log(e);
+   const cli = new CLI.Interface();
+
+   // need to overide the built-in manual
+   // cli.setManualContent(manualContent);
+
+   // if you want a custom manual
+   cli.setManual(new CustomManual(manualContent));
+   cli.launch();
+} catch (e) {
+   console.log(e);
 }

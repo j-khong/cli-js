@@ -210,10 +210,11 @@ You can customize the way cli displays error by inheriting methods
 ```javascript
 class CustomCli extends CLI.Interface {
 // methods that can be overriden
-    displayHeader(header) {
-        // display hat you want here
+    displayHeader() {
+        // display what you want here
     }
     manageException(e) {
-        // display hat you want here
+        // display what you want here
     }
+}
 ```
