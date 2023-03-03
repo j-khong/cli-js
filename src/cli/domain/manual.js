@@ -7,6 +7,7 @@ const Switch = new SimpleSchema({
    name: String,
    desc: String,
    default: { type: Object, blackbox: true, optional: true },
+   validate: { type: Object, blackbox: true, optional: true },
 });
 const Action = new SimpleSchema({
    name: String,

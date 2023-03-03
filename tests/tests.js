@@ -15,9 +15,10 @@ class CliForTests extends CLI.Interface {
       throw e;
    } // don't display errors and rethrow exception
    displayHeader(header) {}
-   executeAction(action, options) {
+   async executeAction(action, options) {
       this.testAction = action;
       this.testOptions = options;
+      await super.executeAction(action, options);
    }
 }
 
@@ -127,6 +128,26 @@ describe('CLI use', function () {
          setUpAndLaunchTestWithException(
             ['/usr/local/bin/node', 'execFilename', 'someAction', '--stringSwitch', ''],
             createOneActionOneSwitchManualContent(actionName, switchName),
+            new CLI.Errors.Cli(),
+         );
+      });
+      it('should validate the value when the validation function is provided', function () {
+         const actionName = 'someAction';
+         const switchName = 'stringSwitch';
+         const acceptedValues = ['a', 'b', 'c'];
+         setUpAndLaunchTest(
+            ['/usr/local/bin/node', 'execFilename', 'someAction', '--stringSwitch', 'a'],
+            createOneActionOneSwitchManualContent(actionName, switchName, null, (v) => acceptedValues.includes(v)),
+            new CLI.Errors.Cli(),
+         );
+      });
+      it('should reject the value when the validation function is provided', function () {
+         const actionName = 'someAction';
+         const switchName = 'stringSwitch';
+         const acceptedValues = ['a', 'b', 'c'];
+         setUpAndLaunchTestWithException(
+            ['/usr/local/bin/node', 'execFilename', 'someAction', '--stringSwitch', 'enumVal'],
+            createOneActionOneSwitchManualContent(actionName, switchName, null, (v) => acceptedValues.includes(v)),
             new CLI.Errors.Cli(),
          );
       });
@@ -265,7 +286,7 @@ function compareResults(cli, actionName, switchName, switchValue, valueType) {
    assert.equal(typeof actualSwitchValue, valueType);
 }
 
-function createOneActionOneSwitchManualContent(actionName, switchName, defaultValue = null) {
+function createOneActionOneSwitchManualContent(actionName, switchName, defaultValue = null, validationFunction = null) {
    return {
       appName: '',
       binName: '',
@@ -277,7 +298,7 @@ function createOneActionOneSwitchManualContent(actionName, switchName, defaultVa
                {
                   name: actionName,
                   desc: 'someActionDesc',
-                  switches: [{ name: switchName, desc: '', default: defaultValue }],
+                  switches: [{ name: switchName, desc: '', default: defaultValue, validate: validationFunction }],
                   action: () => {},
                },
             ],

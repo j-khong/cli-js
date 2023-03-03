@@ -78,6 +78,18 @@ class CLI {
    }
 
    async executeAction(action, options) {
+      for (const aswitch of action.switches) {
+         if (DevUtils.isSet(aswitch.validate)) {
+            try {
+               const value = options.getSwitchValue(aswitch.name);
+               if (!aswitch.validate(value)) {
+                  throw new Error(`value [${value}] is not accepted for ${aswitch.name}`);
+               }
+            } catch (e) {
+               throw new CliError(this.logger.formatError([e.message]), options.getActionName());
+            }
+         }
+      }
       if (FunctionUtils.isAsync(action.action)) {
          await action.action(options);
       } else {
