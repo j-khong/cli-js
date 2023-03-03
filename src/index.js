@@ -1,5 +1,6 @@
 const Interface = require('./cli/cli');
 const Manual = require('./cli/domain/manual');
+const Options = require('./cli/domain/options');
 const Logger = require('./cli/log');
 
 const Input = require('./cli/errors/inputError');
@@ -16,6 +17,7 @@ const Errors = {
 module.exports = {
    Interface,
    Manual,
+   Options,
    Logger,
    Errors,
 };
