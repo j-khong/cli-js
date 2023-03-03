@@ -6,7 +6,7 @@
    "types": "./types/index.d.ts",
    "scripts": {
       "test": "./node_modules/mocha/bin/mocha tests/tests.js",
-      "format": "prettier --write \"src/**/*.js\"",
+      "format": "prettier --write \"src/**/*.js\" && prettier --write \"tests/**/*.js\"",
       "lint": "eslint src/**/*.js",
       "prepublishOnly": "npx tsc && npm run lint && npm test",
       "preversion": "npm run lint",
